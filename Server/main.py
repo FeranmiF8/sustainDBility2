@@ -32,9 +32,16 @@ def getCall(username, key):
     fileList = os.listdir(f"./{username}_{key}")
 
 # set func call
-def setCall(username, key, table, data):
-    df = pd.DataFrame(data)
-    df.to_csv(f"./{username}_{key}/{table}.csv")
+def setCall(username, accountkey, table, data, key):
+
+    df = pd.DataFrame({
+        "key":[],
+        "data":[]
+    }, dtype=object)
+    for i in range(len(key)):
+        df.loc[i] = [key[i], data[i]]
+
+    df.to_csv(f"./{username}_{accountkey}/{table}.csv")
 
 # delete func call
 def deleteCall():
@@ -46,7 +53,7 @@ if not os.path.isdir(f"./{datajson['username']}_{datajson['accountkey']}"):
 if datajson["method"] == "get":
     getCall()
 elif datajson["method"] == "set":
-    setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"])
+    setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"], datajson["key"])
 
 
 # tcpSerSock = socket(AF_INET, SOCK_STREAM)
