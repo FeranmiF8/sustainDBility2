@@ -67,9 +67,13 @@ class Connection:
     '''
     def get(self, key):
         self.connect()
+        table = None
         for i in self.tables:
             if i.name == key:
-                return i
+                table = i
+                break
+        if table is None:
+            table = table(key, [], self)
         json_obj = {
             "method": "get",
             "username": self.user,
@@ -104,8 +108,16 @@ class Connection:
             "username": self.user,
             "accountkey": self.password,
             "tableName": table.name,
-            "data": table.data
+            "data": ''
         }
+        
+        data = {'key':[], 'data':[]}
+        
+        for i in table.data:
+            data['key'].append(i)
+            data['data'].append(table.data[i])
+            
+        json_obj['data'] = data
 
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
