@@ -1,0 +1,7 @@
+{
+    "method":"get/set/delete",
+    "username":"kenzie",
+    "accountkey":"poop",
+    "tableName":"table1",
+    "data":"whatever"
+}
