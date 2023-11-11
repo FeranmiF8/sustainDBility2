@@ -34,8 +34,11 @@ class Connection:
     Connect to the server
     '''
     def connect(self):
+        print('connecting')
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.conn.connect((self.ip, 10000))
+        print('socket created', self.ip)
+        self.conn.connect((self.ip, 12000))
+        print('connected')
 
         # start the thread to receive data on the connection
         # self.collect_thread = threading.Thread(name="Collector", target=self.collect)
@@ -46,9 +49,7 @@ class Connection:
     Disconnect from the server
     '''
     def disconnect(self):
-        if self.collect_thread:
-            self.stop = True
-            # self.collect_thread.join()
+        self.conn.close()
 
     '''
     Destructor for Connection object
@@ -66,9 +67,13 @@ class Connection:
     '''
     def get(self, key):
         self.connect()
+        table = None
         for i in self.tables:
             if i.name == key:
-                return i
+                table = i
+                break
+        if table is None:
+            table = table(key, [], self)
         json_obj = {
             "method": "get",
             "username": self.user,
@@ -103,11 +108,26 @@ class Connection:
             "username": self.user,
             "accountkey": self.password,
             "tableName": table.name,
-            "data": table.data
+            "data": ''
         }
+        
+        data = {'key':[], 'data':[]}
+        
+        for i in table.data:
+            data['key'].append(i)
+            data['data'].append(table.data[i])
+            
+        json_obj['data'] = data
 
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
         self.__del__()
+        
+    def test(self, msg):
+        self.connect()
+        self.conn.sendall(msg.encode())
+        self.disconnect()
+        print('worked')
+        
 
 
