@@ -34,8 +34,11 @@ class Connection:
     Connect to the server
     '''
     def connect(self):
+        print('connecting')
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.conn.connect((self.ip, 10000))
+        print('socket created', self.ip)
+        self.conn.connect((self.ip, 12000))
+        print('connected')
 
         # start the thread to receive data on the connection
         # self.collect_thread = threading.Thread(name="Collector", target=self.collect)
@@ -109,5 +112,12 @@ class Connection:
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
         self.__del__()
+        
+    def test(self, msg):
+        self.connect()
+        self.conn.sendall(msg.encode())
+        self.disconnect()
+        print('worked')
+        
 
 
