@@ -163,7 +163,7 @@ a {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  padding-top: 700px;
+  padding-top: 100%;
   overflow: hidden;
 }
 .note-info {
