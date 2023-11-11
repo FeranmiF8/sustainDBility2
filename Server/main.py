@@ -1,43 +1,63 @@
+
+from socket import *
 import pandas as pd
 
-# data = {
-#     "Temperature":[12, 43, 35],
-#     "Moisture":[65, 43, 32]
+# # data = {
+# #     "Temperature":[12, 43, 35],
+# #     "Moisture":[65, 43, 32]
+# # }
+
+# # df = pd.DataFrame(data)
+
+# # df.to_csv("test.csv")
+
+# # print(df)
+
+# datajson = {
+#     "method":"set",
+#     "username":"kenzie",
+#     "accountkey":"poop",
+#     "tableName":"table1",
+#     "data":{
+#         "Temperature":[18, 43, 35],
+#         "Moisture":[65, 43, 32]
+#     }
 # }
 
-# df = pd.DataFrame(data)
+# print(datajson["method"])
 
-# df.to_csv("test.csv")
+# # get func call
+# def getCall():
+#     return
 
-# print(df)
+# # set func call
+# def setCall(username, key, table, data):
+#     df = pd.DataFrame(data)
+#     df.to_csv(f"./{username}_{key}/{table}.csv")
 
-datajson = {
-    "method":"set",
-    "username":"kenzie",
-    "accountkey":"poop",
-    "tableName":"table1",
-    "data":{
-        "Temperature":[18, 43, 35],
-        "Moisture":[65, 43, 32]
-    }
-}
+# # delete func call
+# def deleteCall():
+#     return
 
-print(datajson["method"])
+# if datajson["method"] == "get":
+#     getCall()
+# elif datajson["method"] == "set":
+#     setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"])
 
-# get func call
-def getCall():
-    return
 
-# set func call
-def setCall(username, key, table, data):
-    df = pd.DataFrame(data)
-    df.to_csv(f"./{username}_{key}/{table}.csv")
+tcpSerSock = socket(AF_INET, SOCK_STREAM)
+serverPort = 12000
+tcpSerSock.bind(('',serverPort))
+tcpSerSock.listen(1)
 
-# delete func call
-def deleteCall():
-    return
-
-if datajson["method"] == "get":
-    getCall()
-elif datajson["method"] == "set":
-    setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"])
+while 1:
+    # Start receiving data from the client
+    print('Ready to serve...')
+    tcpCliSock, addr = tcpSerSock.accept()
+    print('Received a connection from:', addr)
+    message = tcpCliSock.recv(4096).decode()
+    print(message)
+    
+    tcpCliSock.close()
+# Fill in start.
+tcpSerSock.close()
