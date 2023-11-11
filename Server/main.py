@@ -47,7 +47,7 @@ import pandas as pd
 
 tcpSerSock = socket(AF_INET, SOCK_STREAM)
 serverPort = 12000
-tcpSerSock.bind(('',serverPort))
+tcpSerSock.bind(('localhost',serverPort))
 tcpSerSock.listen(1)
 
 while 1:
