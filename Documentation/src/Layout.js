@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import List from "./reactfiles/List";
+import Get from "./reactfiles/Get";
+import Set from "./reactfiles/Set";
+import Delete from "./reactfiles/Delete";
 import { v4 as uuidv4 } from "uuid";
 
 function Layout() {
@@ -18,22 +20,6 @@ function Layout() {
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
-  function addNote() {
-    // if(!activeNote) {
-    //   return <div className="no-note-selected">No Note Yet</div>
-    // }
-    const id = uuidv4();
-    setNotes((prevNotes) => {
-      return [...prevNotes, { id: id, title: "Untitled", text: "...", date: "" }];
-    });
-    navigate("notes/" + id + "/edit");
-  }
-
-  useEffect(() => {
-    if (Object.keys(params).length === 0){
-      navigate("/notes");
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
@@ -42,22 +28,25 @@ function Layout() {
   return (
     <>
       <div id="title">
-        <h1>Lotion</h1>
-        <p>Like Notion, but worse.</p>
+        <h1>SustainDBility</h1>
+        <p>Code the Change 2023: Hackathon</p>
       </div>
       <label id="sidebar" onClick={showSidebar}>
         &#9776;
       </label>
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <div id="head">
-          <h2>Notes</h2>
-          <label id="addNote" onClick={addNote}>
-            +
-          </label>
+          <h2>Info</h2>
         </div>
-        <div className="nav-menu-items">
-          <List notes={notes} />
-        </div>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/get")})}>
+          <h2>Get</h2>
+        </button>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/set")})}>
+          <h2>Set</h2>
+        </button>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/delete")})}>
+          <h2>Delete</h2>
+        </button>
       </nav>
       <div className={sidebar ? "content menuActive" : "content"}>
         <Outlet context={[notes, setNotes]} />

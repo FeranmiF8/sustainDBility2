@@ -2,47 +2,47 @@
 from socket import *
 import pandas as pd
 import os
-import json
-import csv
 
-# datajson = {
-#     "method":"set",
-#     "username":"kenzie",
-#     "accountkey":"poop",
-#     "tableName":"table1",
-#     "data":{
-#         "keys":['isaac', 'kenzie', 'carson','feranmi'],
-#         "data":[[65, 43, 32],[65, 43, 32],[65, 43, 32],[65, 43, 32]]
-#     }
+# data = {
+#     "Temperature":[12, 43, 35],
+#     "Moisture":[65, 43, 32]
 # }
+
+# df = pd.DataFrame(data)
+
+# df.to_csv("test.csv")
+
+# print(df)
+
+datajson = {
+    "method":"get",
+    "username":"kenzie",
+    "accountkey":"poop",
+    "tableName":"table1",
+    "data":{
+        "keys":['isaac', 'kenzie', 'carson','feranmi'],
+        "data":[[65, 43, 32],[65, 43, 32],[65, 43, 32],[65, 43, 32]]
+    }
+}
 
 # print(datajson["method"])
 
 # get func call
 def getCall(username, key):
     fileList = os.listdir(f"./{username}_{key}")
-    print('table found:',fileList)
-    try:
-        #file = open(f"./{username}_{key}/{fileList[0]}", "r")
-        
-        ret = []
-        csv_reader = None
-        with open(f"./{username}_{key}/{fileList[0]}", 'r') as file:
-            print('file found')
-            csv_reader = csv.reader(file)
-            for row in csv_reader:
-            # Each row is a list representing the columns in that row
-                row.pop(0)
-                ret.append(row)
-            file.close()
-        
-        ret.pop(0)
-        print(ret)
-        return ret
-    except Exception as e:
-        print(e)
-        print('file not found')
-        return
+    
+    returnStr = ""
+    json_data = {}
+    for fileName in fileList:
+        data = pd.read_csv(f"./{username}_{key}/{fileName}")
+        # keys_col = data[["keys"]].to_string(index=False)
+        # data_col = data[["data"]].to_string(index=False)
+        # returnStr += keys_col + data_col
+        json_data[f"{fileName}"] = data.to_json(orient='records', lines=True)
+        # json_data += data.to_json(orient='records', lines=True)
+    print(json_data)
+    
+    # print(returnStr.replace("\n", " "))
 
 # set func call
 def setCall(username, accountkey, table, data, key):
