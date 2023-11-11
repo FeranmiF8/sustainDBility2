@@ -49,9 +49,7 @@ class Connection:
     Disconnect from the server
     '''
     def disconnect(self):
-        if self.collect_thread:
-            self.stop = True
-            # self.collect_thread.join()
+        self.conn.close()
 
     '''
     Destructor for Connection object
