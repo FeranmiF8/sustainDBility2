@@ -70,7 +70,7 @@ class Connection:
         return  newTable
 
 
-    def set(self, table):
+    def setTable(self, table):
         for i in self.tables:
             if i.name == table.name:
                 i = table
@@ -89,12 +89,6 @@ class Connection:
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
         self.__del__()
-    
-    def delete(self, key):
-        
-        self.conn.sendall("delete " + key)
-        data = self.conn.recv(1024)
-        return data
 
 
 
