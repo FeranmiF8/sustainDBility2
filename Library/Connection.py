@@ -13,41 +13,60 @@ class Connection:
     # class variables
     sock = None
     conn = None
-    buffer_S = ""
-    lock = threading.Lock()
-    collect_thread = None
-    stop = None
-    socket_timeout = 0.1
-    reorder_msg_S = None
-    tables = []
+    ip = ''
+    user = ''
+    password = ''
 
 
+    '''
+    constructor for Connection object
+    @param ip: IP address of the server
+    @param user: username for authentication
+    @param password: password for authentication
+    '''
     def __init__(self, ip, user, password):
         self.ip = ip
         self.user = user
         self.password = password
 
     
+    '''
+    Connect to the server
+    '''
     def connect(self):
+        print('connecting')
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.conn.connect((self.ip, 10000))
+        print('socket created', self.ip)
+        self.conn.connect((self.ip, 12000))
+        print('connected')
 
         # start the thread to receive data on the connection
         # self.collect_thread = threading.Thread(name="Collector", target=self.collect)
         # self.stop = False
         # self.collect_thread.start()
 
+    '''
+    Disconnect from the server
+    '''
     def disconnect(self):
         if self.collect_thread:
             self.stop = True
             # self.collect_thread.join()
 
+    '''
+    Destructor for Connection object
+    '''
     def __del__(self):
         if self.sock is not None:
             self.sock.close()
         if self.conn is not None:
             self.conn.close()
 
+    '''
+    Get table data from the server
+    @param key: name of the table
+    @return: table object
+    '''
     def get(self, key):
         self.connect()
         for i in self.tables:
@@ -70,6 +89,10 @@ class Connection:
         return  newTable
 
 
+    '''
+    Set table data to the server
+    @param table: table object
+    '''
     def setTable(self, table):
         for i in self.tables:
             if i.name == table.name:
@@ -89,30 +112,12 @@ class Connection:
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
         self.__del__()
+        
+    def test(self, msg):
+        self.connect()
+        self.conn.sendall(msg.encode())
+        self.disconnect()
+        print('worked')
+        
 
 
-
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser(description="Network layer implementation.")
-#     parser.add_argument(
-#         "role",
-#         help="Role is either sender or receiver.",
-#         choices=["sender", "receiver"],
-#     )
-#     parser.add_argument("receiver", help="receiver.")
-#     parser.add_argument("port", help="Port.", type=int)
-#     args = parser.parse_args()
-
-#     network = NetworkLayer(args.role, args.receiver, args.port)
-#     if args.role == "sender":
-#         network.udt_send("MSG_FROM_SENDER")
-#         sleep(2)
-#         print(network.udt_receive())
-#         network.disconnect()
-
-#     else:
-#         sleep(1)
-#         print(network.udt_receive())
-#         network.udt_send("MSG_FROM_RECEIVER")
-#         network.disconnect()
