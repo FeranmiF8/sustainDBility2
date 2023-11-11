@@ -85,14 +85,17 @@ class Connection:
 
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
-        rec = self.conn.recv(1024).decode()
-        data = []
-        while rec != 'done':
-            print(rec)
-            rec = json.loads(rec)
-            data.append([rec['key'], rec['data']])
-            rec = self.conn.recv(1024).decode()
-        print('datifa:',data)
+        rec = json.loads(self.conn.recv(1024).decode())
+        table = rec[f'{key}.csv']
+        
+        table = table.split('\n')
+        for row in table:
+            row = json.loads(row)
+            print(row['key'], end=': ')
+            rowData = row['data'].replace('[','').replace(']','').split(',')
+            rowData = [int(i) for i in rowData]
+            print(rowData)
+        
         
         newTable = Table(key, data, self)
         self.tables.append(newTable)

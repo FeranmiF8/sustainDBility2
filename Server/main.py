@@ -2,6 +2,7 @@
 from socket import *
 import pandas as pd
 import os
+import json
 
 # data = {
 #     "Temperature":[12, 43, 35],
@@ -14,21 +15,10 @@ import os
 
 # print(df)
 
-datajson = {
-    "method":"get",
-    "username":"kenzie",
-    "accountkey":"poop",
-    "tableName":"table1",
-    "data":{
-        "keys":['isaac', 'kenzie', 'carson','feranmi'],
-        "data":[[65, 43, 32],[65, 43, 32],[65, 43, 32],[65, 43, 32]]
-    }
-}
-
 # print(datajson["method"])
 
 # get func call
-def getCall(username, key):
+def getCall(username, key, socket):
     fileList = os.listdir(f"./{username}_{key}")
     
     returnStr = ""
@@ -41,7 +31,7 @@ def getCall(username, key):
         json_data[f"{fileName}"] = data.to_json(orient='records', lines=True)
         # json_data += data.to_json(orient='records', lines=True)
     print(json_data)
-    
+    socket.sendall(json.dumps(json_data).encode())
     # print(returnStr.replace("\n", " "))
 
 # set func call
@@ -76,7 +66,7 @@ while 1:
         continue
     data = json.loads(message)
     if data["method"] == "get":
-        getCall(data["username"],data["accountkey"])
+        getCall(data["username"],data["accountkey"], tcpCliSock)
     elif data["method"] == "set":
         setCall(data["username"], data["accountkey"], data["tableName"], data["data"]["data"], data["data"]["key"])
     elif data["method"] == "quit":
