@@ -32,7 +32,7 @@ class Table:
             if i[0] == key:
                 self.data.remove(i)
                 break
-        self.server.setTable(self.name, self.data)
+        self.server.setTable(self)
         
     def test(self):
         print('object works')
