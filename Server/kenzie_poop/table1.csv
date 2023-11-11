@@ -1,4 +1,3 @@
-,Temperature,Moisture
-0,12,65
-1,43,43
-2,35,32
+,key,data
+0,Isaac,"['epic', 69, 420, 'Hus']"
+1,Ken,"['cool', 70, 421, 'fishdad', 'swe']"
