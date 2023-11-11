@@ -5,10 +5,11 @@ class Table:
     data = []
     server = None
     
-    def __init__(self, name, server):
+    def __init__(self, name, data, server):
         self.name = name
-        self.data = []
-        #data = server.getTable(name)
+        self.data = data
+        self.server = server
+        print('table object created')
         
     def get(self, key):
         for i in self.data:
