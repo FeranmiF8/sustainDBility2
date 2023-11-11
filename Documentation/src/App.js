@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/"></Route>
-          <Route path="/info" element={<div className="no-note-selected">Heyyyyyyy</div>}></Route>
+          <Route path="/info" element={<div className="no-note-selected">Click menu icon for info instructions</div>}></Route>
           <Route path="/info/get" element={<Get />}></Route>
           <Route path="/info/set" element={<Set />}></Route>
           <Route path="/info/delete" element={<Delete />}></Route>
