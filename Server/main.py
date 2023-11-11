@@ -15,7 +15,7 @@ import os
 # print(df)
 
 datajson = {
-    "method":"set",
+    "method":"get",
     "username":"kenzie",
     "accountkey":"poop",
     "tableName":"table1",
@@ -30,6 +30,19 @@ print(datajson["method"])
 # get func call
 def getCall(username, key):
     fileList = os.listdir(f"./{username}_{key}")
+    
+    returnStr = ""
+    json_data = {}
+    for fileName in fileList:
+        data = pd.read_csv(f"./{username}_{key}/{fileName}")
+        # keys_col = data[["keys"]].to_string(index=False)
+        # data_col = data[["data"]].to_string(index=False)
+        # returnStr += keys_col + data_col
+        json_data[f"{fileName}"] = data.to_json(orient='records', lines=True)
+        # json_data += data.to_json(orient='records', lines=True)
+    print(json_data)
+    
+    # print(returnStr.replace("\n", " "))
 
 # set func call
 def setCall(username, accountkey, table, data, key):
@@ -51,9 +64,9 @@ if not os.path.isdir(f"./{datajson['username']}_{datajson['accountkey']}"):
     os.mkdir(f"./{datajson['username']}_{datajson['accountkey']}")
 
 if datajson["method"] == "get":
-    getCall()
+    getCall(datajson["username"], datajson["accountkey"])
 elif datajson["method"] == "set":
-    setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"], datajson["key"])
+    setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"]["data"], datajson["data"]["keys"])
 
 
 # tcpSerSock = socket(AF_INET, SOCK_STREAM)
