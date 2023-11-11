@@ -25,7 +25,7 @@ class Table:
             else:
                 self.data.append([key, value])
                 break
-        self.server.setTable(self.name, self.data)
+        self.server.setTable(self)
     
     def delete(self, key):
         for i in self.data:
