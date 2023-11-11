@@ -7,11 +7,7 @@ import Table
 
 
 ## Provides an abstraction for the network layer
-class Server:
-    # configuration parameters
-    prob_pkt_loss = 0
-    prob_byte_corr = 0
-    prob_pkt_reorder = 0.5
+class Connection:
 
     # class variables
     sock = None
@@ -35,20 +31,35 @@ class Server:
         self.conn.connect((ip, 10000))
 
         # start the thread to receive data on the connection
-        self.collect_thread = threading.Thread(name="Collector", target=self.collect)
-        self.stop = False
-        self.collect_thread.start()
+        # self.collect_thread = threading.Thread(name="Collector", target=self.collect)
+        # self.stop = False
+        # self.collect_thread.start()
 
     def disconnect(self):
         if self.collect_thread:
             self.stop = True
-            self.collect_thread.join()
+            # self.collect_thread.join()
 
     def __del__(self):
         if self.sock is not None:
             self.sock.close()
         if self.conn is not None:
             self.conn.close()
+
+    def get(self, key):
+        self.conn.sendall("get " + key)
+        data = self.conn.recv(1024)
+        return data
+
+    def set(self, key, value):
+        self.conn.sendall("set " + key + " " + value)
+        data = self.conn.recv(1024)
+        return data
+    
+    def delete(self, key):
+        self.conn.sendall("delete " + key)
+        data = self.conn.recv(1024)
+        return data
 
 
 
