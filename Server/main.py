@@ -49,10 +49,10 @@ elif datajson["method"] == "set":
     setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"])
 
 
-# tcpSerSock = socket(AF_INET, SOCK_STREAM)
-# serverPort = 12000
-# tcpSerSock.bind(('10.13.155.107',serverPort))
-# tcpSerSock.listen(1)
+tcpSerSock = socket(AF_INET, SOCK_STREAM)
+serverPort = 12000
+tcpSerSock.bind(('localhost',serverPort))
+tcpSerSock.listen(1)
 
 # while 1:
 #     # Start receiving data from the client

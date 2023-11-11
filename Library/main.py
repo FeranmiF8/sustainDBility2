@@ -1,9 +1,11 @@
 
 from table import *
+from Connection import *
 
 if __name__ == "__main__":
-    table = Table("tableName", 'server')
-    table.test()
+    server = Connection("10.13.155.107", "username", "password")
+    
+    server.test('hello gamers')
     
     print('poop')
     exit()
