@@ -23,8 +23,11 @@ class Table:
     returns: value of key
     '''
     def get(self, key):
+        # print(self.data)
         for i in self.data:
+            print(i)
             if i[0] == key:
+                print('value',i[1])
                 return i[1]
         print('Data not found')
     
@@ -35,13 +38,8 @@ class Table:
     @param value: data to add
     '''
     def set(self, key, value):
-        for i in self.data:
-            if i[0] == key:
-                i[1] = value
-                break
-            else:
-                self.data.append([key, value])
-                break
+        print(key, value)
+        self.data.append([key, value])
         self.server.setTable(self)
     
     '''
