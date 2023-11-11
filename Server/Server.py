@@ -3,7 +3,7 @@ import socket
 import threading
 from time import sleep
 import random
-import Table
+import table
 
 
 ## Provides an abstraction for the network layer
