@@ -3,7 +3,7 @@ import socket
 import threading
 from time import sleep
 import random
-import table
+from table import *
 import json
 
 
@@ -16,6 +16,7 @@ class Connection:
     ip = ''
     user = ''
     password = ''
+    tables = []
 
 
     '''
@@ -73,7 +74,7 @@ class Connection:
                 table = i
                 break
         if table is None:
-            table = table(key, [], self)
+            table = Table(key, [], self)
         json_obj = {
             "method": "get",
             "username": self.user,
@@ -84,8 +85,16 @@ class Connection:
 
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
-        data = self.conn.recv(1024)
-        newTable = table(key, data, self)
+        rec = self.conn.recv(1024).decode()
+        data = []
+        while rec != 'done':
+            print(rec)
+            rec = json.loads(rec)
+            data.append([rec['key'], rec['data']])
+            rec = self.conn.recv(1024).decode()
+        print('datifa:',data)
+        
+        newTable = Table(key, data, self)
         self.tables.append(newTable)
         self.__del__()
         return  newTable
@@ -114,8 +123,10 @@ class Connection:
         data = {'key':[], 'data':[]}
         
         for i in table.data:
-            data['key'].append(i)
-            data['data'].append(table.data[i])
+            data['key'].append(i[0])
+            data['data'].append(i[1])
+        
+        # print('DATA:',data)
             
         json_obj['data'] = data
 
@@ -127,7 +138,18 @@ class Connection:
         self.connect()
         self.conn.sendall(msg.encode())
         self.disconnect()
-        print('worked')
+        # print('worked')
+        
+    def closeRemote(self):
+        json_obj = {
+            "method": "quit",
+            "username": self.user,
+            "accountkey": self.password,
+            "tableName": '',
+            "data": ''
+        }
+        req = json.dumps(json_obj)
+        self.conn.sendall(req.encode())
         
 
 
