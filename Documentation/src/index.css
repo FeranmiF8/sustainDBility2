@@ -163,7 +163,7 @@ a {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  padding: 0px;
+  padding-top: 700px;
   overflow: hidden;
 }
 .note-info {
@@ -245,7 +245,6 @@ hr {
   padding-left: 15px;
   display:flex;
   flex-direction: column;
-  text-align: center;
 }
 
 .view-text{
