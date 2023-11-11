@@ -41,6 +41,9 @@ function Layout() {
         <button className="nav-menu-items" onClick={(()=>{navigate("info/get")})}>
           <h2>Get</h2>
         </button>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/gettable")})}>
+          <h2>GetTable</h2>
+        </button>
         <button className="nav-menu-items" onClick={(()=>{navigate("info/set")})}>
           <h2>Set</h2>
         </button>
