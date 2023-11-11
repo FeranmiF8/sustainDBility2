@@ -19,8 +19,10 @@ datajson = {
     "username":"kenzie",
     "accountkey":"poop",
     "tableName":"table1",
-    "key":["Isaac", "Ken"],
-    "data":[['epic', 69, 420, 'Hus'], ['cool', 70, 421, 'fishdad', 'swe']]
+    "data":{
+        "keys":['isaac', 'kenzie', 'carson','feranmi'],
+        "data":[[65, 43, 32],[65, 43, 32],[65, 43, 32],[65, 43, 32]]
+    }
 }
 
 print(datajson["method"])
@@ -54,10 +56,10 @@ elif datajson["method"] == "set":
     setCall(datajson["username"], datajson["accountkey"], datajson["tableName"], datajson["data"], datajson["key"])
 
 
-tcpSerSock = socket(AF_INET, SOCK_STREAM)
-serverPort = 12000
-tcpSerSock.bind(('localhost',serverPort))
-tcpSerSock.listen(1)
+# tcpSerSock = socket(AF_INET, SOCK_STREAM)
+# serverPort = 12000
+# tcpSerSock.bind(('localhost',serverPort))
+# tcpSerSock.listen(1)
 
 # while 1:
 #     # Start receiving data from the client
