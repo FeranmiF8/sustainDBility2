@@ -35,16 +35,8 @@ class Connection:
     Connect to the server
     '''
     def connect(self):
-        print('connecting')
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print('socket created', self.ip)
         self.conn.connect((self.ip, 12000))
-        print('connected')
-
-        # start the thread to receive data on the connection
-        # self.collect_thread = threading.Thread(name="Collector", target=self.collect)
-        # self.stop = False
-        # self.collect_thread.start()
 
     '''
     Disconnect from the server
@@ -66,7 +58,7 @@ class Connection:
     @param key: name of the table
     @return: table object
     '''
-    def get(self, key):
+    def getTable(self, key):
         self.connect()
         table = None
         for i in self.tables:
@@ -85,18 +77,24 @@ class Connection:
 
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
-        rec = json.loads(self.conn.recv(1024).decode())
+        buffer = ''
+        rec = self.conn.recv(1024).decode()
+        while rec != '':
+            buffer += rec
+            rec = self.conn.recv(1024).decode()
+        rec = json.loads(buffer)
         table = rec[f'{key}.csv']
         
         table = table.split('\n')
+        data = []
         for row in table:
-            row = json.loads(row)
-            print(row['key'], end=': ')
-            rowData = row['data'].replace('[','').replace(']','').split(',')
-            rowData = [int(i) for i in rowData]
-            print(rowData)
-        
-        
+            try:
+                row = json.loads(row)
+                rowData = row['data'].replace('[','').replace(']','').split(',')
+                rowData = [int(i) for i in rowData]
+                data.append([row['key'], rowData])
+            except Exception as e:
+                pass
         newTable = Table(key, data, self)
         self.tables.append(newTable)
         self.__del__()
@@ -122,28 +120,17 @@ class Connection:
             "tableName": table.name,
             "data": ''
         }
-        
         data = {'key':[], 'data':[]}
-        
         for i in table.data:
             data['key'].append(i[0])
-            data['data'].append(i[1])
-        
-        # print('DATA:',data)
-            
+            data['data'].append(i[1])         
         json_obj['data'] = data
-
         req = json.dumps(json_obj)
         self.conn.sendall(req.encode())
         self.__del__()
         
-    def test(self, msg):
-        self.connect()
-        self.conn.sendall(msg.encode())
-        self.disconnect()
-        # print('worked')
-        
     def closeRemote(self):
+        self.connect()
         json_obj = {
             "method": "quit",
             "username": self.user,

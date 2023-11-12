@@ -30,7 +30,8 @@ def getCall(username, key, socket):
         # returnStr += keys_col + data_col
         json_data[f"{fileName}"] = data.to_json(orient='records', lines=True)
         # json_data += data.to_json(orient='records', lines=True)
-    print(json_data)
+    # print(json_data)
+    print('sent data to remote client')
     socket.sendall(json.dumps(json_data).encode())
     # print(returnStr.replace("\n", " "))
 
@@ -59,7 +60,6 @@ while 1:
     # Start receiving data from the client
     print('Ready to serve...')
     tcpCliSock, addr = tcpSerSock.accept()
-    print('Received a connection from:', addr)
     message = tcpCliSock.recv(4096).decode()
     # print('message: ',message)
     if message == '':
@@ -70,6 +70,7 @@ while 1:
     elif data["method"] == "set":
         setCall(data["username"], data["accountkey"], data["tableName"], data["data"]["data"], data["data"]["key"])
     elif data["method"] == "quit":
+        tcpCliSock.close()
         break
     tcpCliSock.close()
 tcpSerSock.close()

@@ -15,7 +15,7 @@ class Table:
         self.name = name
         self.data = data
         self.server = server
-        print('table object created')
+        # print('table object created')
         
     '''
     gets value from the data that matches the key
@@ -25,11 +25,11 @@ class Table:
     def get(self, key):
         # print(self.data)
         for i in self.data:
-            print(i)
+            
             if i[0] == key:
-                print('value',i[1])
+                # print('value',i[1])
                 return i[1]
-        print('Data not found')
+        # print('Data not found')
     
     
     '''
@@ -38,7 +38,7 @@ class Table:
     @param value: data to add
     '''
     def set(self, key, value):
-        print(key, value)
+        # print(key, value)
         self.data.append([key, value])
         self.server.setTable(self)
     
@@ -54,7 +54,8 @@ class Table:
         self.server.setTable(self)
         
     def test(self):
-        print('object works')
+        # print('object works')
+        pass
         
         
         
