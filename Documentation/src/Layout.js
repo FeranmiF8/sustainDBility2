@@ -37,9 +37,15 @@ function Layout() {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <div id="head">
           <h2>Info</h2>
+          <button type="button" onClick={showSidebar} class="closebtn">
+            <b>X</b>
+          </button>
         </div>
         <button className="nav-menu-items" onClick={(()=>{navigate("info/get")})}>
           <h2>Get</h2>
+        </button>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/gettable")})}>
+          <h2>GetTable</h2>
         </button>
         <button className="nav-menu-items" onClick={(()=>{navigate("info/set")})}>
           <h2>Set</h2>

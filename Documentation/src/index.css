@@ -55,7 +55,7 @@ a {
 }
 
 .nav-menu {
-  width: 350px;
+  width: 300px;
   top: 75px;
   height: 92vh;
   border-right: 1px solid lightgrey;
@@ -71,7 +71,7 @@ a {
 
 #head {
   display: flex;
-  width: 350px;
+  width: 300px;
   height: 60px;
   justify-content: space-between;
   align-items: center;
@@ -106,20 +106,28 @@ a {
 }
 
 .no-note-selected {
-  font-size: xx-large;
-  color: grey;
+  font-size: x-large;
+  color: black;
+  padding: 50px;
+  text-align: center;
+}
+
+.nav-menu-items:hover {
+  border: none;
+  background-color: green;
 }
 
 .nav-menu-items {
   margin:0px;
   padding: 0px;
-  width: 350px;
-  height: 100px;
+  width: 300px;
+  height: 75px;
   overflow: auto;
+  border: none;
 }
 
 .note {
-  border: 1px solid lightgrey;
+  border: none;
   height: 100px;
   padding-left: 5px;
   padding-right: 20px;
@@ -129,6 +137,10 @@ a {
   cursor: pointer;
   overflow:hidden;
   position: relative;
+}
+
+.closebtn {
+  border: none;
 }
 
 .note:hover{
@@ -163,7 +175,7 @@ a {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  padding-top: 700px;
+  padding-top: 100%;
   overflow: hidden;
 }
 .note-info {
@@ -181,6 +193,7 @@ a {
 .button-for-note {
   padding: 28px 20px 28px 20px;
   cursor: pointer;
+
 }
 
 .button-for-note:hover{
