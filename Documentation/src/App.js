@@ -5,13 +5,15 @@ import Get from "./reactfiles/Get"
 import GetTable from "./reactfiles/GetTable"
 import Set from "./reactfiles/Set"
 import Delete from "./reactfiles/Delete"
+import Constructor from "./reactfiles/Constructor"
 
 function App() {
   const notes = [
     { id: 1, title: "Get", content: "This is how to GET information" },
     { id: 2, title: "GetTable", content: "This is how to GET TABLE information" },
     { id: 3, title: "Set", content: "This is how to SET information" },
-    { id: 4, title: "Delete", content: "This is how to DELETE information" }
+    { id: 4, title: "Delete", content: "This is how to DELETE information" },
+    { id: 5, title: "Constructor", content: "This is how to CONSTRUCT information" }
   ];
   
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route path="/info/gettable" element={<GetTable />}></Route>
           <Route path="/info/set" element={<Set />}></Route>
           <Route path="/info/delete" element={<Delete />}></Route>
+          <Route path="/info/constructor" element={<Constructor />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

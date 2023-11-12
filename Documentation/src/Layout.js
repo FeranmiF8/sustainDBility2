@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-// import Get from "./reactfiles/Get";
-// import Set from "./reactfiles/Set";
-// import Delete from "./reactfiles/Delete";
-// import { v4 as uuidv4 } from "uuid";
 
 function Layout() {
   const navigate = useNavigate();
@@ -52,6 +48,9 @@ function Layout() {
         </button>
         <button className="nav-menu-items" onClick={(()=>{navigate("info/delete")})}>
           <h2>Delete</h2>
+        </button>
+        <button className="nav-menu-items" onClick={(()=>{navigate("info/constructor")})}>
+          <h2>Constructor</h2>
         </button>
       </nav>
       <div className={sidebar ? "content menuActive" : "content"}>
