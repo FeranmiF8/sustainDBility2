@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/"></Route>
-          <Route path="/info" element={<div className="no-note-selected">Click menu icon for info instructions</div>}></Route>
+          <Route path="/info" element={<div className="no-note-selected">Welcome to the future of data storage – introducing SustainDBility, where efficiency meets environmental responsibility. Imagine a world where computing resources are consolidated on a massive scale, eliminating idle servers and minimizing energy waste. Our revolutionary server virtualization ensures optimal resource utilization, dynamically scaling to meet demand and conserving energy during downtime. sustainDBility is not just about storing data; it's about storing it responsibly. Join us in shaping a greener, more efficient future. Embrace the sustainDBility – where sustainability meets performance.</div>}></Route>
           <Route path="/info/get" element={<Get />}></Route>
           <Route path="/info/get" element={<GetTable />}></Route>
           <Route path="/info/set" element={<Set />}></Route>

@@ -106,8 +106,10 @@ a {
 }
 
 .no-note-selected {
-  font-size: xx-large;
-  color: grey;
+  font-size: x-large;
+  color: black;
+  padding: 50px;
+  text-align: center;
 }
 
 .nav-menu-items {
